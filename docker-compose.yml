@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  xonet:
+    image: xonet
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: xonet.api/Dockerfile
+    ports:
+      - "9797:9797"
+    environment:
+      - COOLIFY_FQDN=https://api.xoose.eu
+      - COOLIFY_URL=api.xoose.eu
+      - COOLIFY_PORT=9797
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9797"]
+      interval: 2s
+      timeout: 10s
+      retries: 15
